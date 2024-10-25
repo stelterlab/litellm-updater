@@ -1,4 +1,4 @@
-# How to use
+# How to use with llama.cpp server
 
 copy env_example to .env and adjust the values (IPs, Keys, etc.)
 
