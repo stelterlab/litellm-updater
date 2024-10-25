@@ -1,0 +1,22 @@
+services:
+  litellm-updater:
+    image: litellm-updater:dev
+    env_file: .env
+    container_name: litellm-updater
+    networks:
+      - engine
+
+  llamacpp-server:
+    image: ghcr.io/ggerganov/llama.cpp:server
+    container_name: llama-cpp
+    ports:
+      - 8080:8080
+    volumes:
+      - ./models:/models
+    env_file: .env
+    networks:
+      - engine
+
+networks:
+  engine:
+    name: engineroom
