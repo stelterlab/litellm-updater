@@ -15,6 +15,9 @@ import logging
 import requests
 import time
 
+from pprint import pprint
+
+
 engine_api_base = os.environ.get("ENGINE_API_BASE", "http://127.0.0.1:8080/v1")
 engine_api_key = os.environ.get("ENGINE_API_KEY", "")
 
@@ -217,10 +220,15 @@ def wait_for_engine_ready():
             logging.info("Engine not ready, waiting for 5 seconds...")
             time.sleep(5)
         else:
-            model_data = response.json()
-            if "data" in model_data and model_data["data"][0]["id"]:
-                model_name = model_data["data"][0]["id"]
-                engine_ready = True
+            if response.status_code != 200:
+                logging.info("Engine not ready (status code %s), waiting for 5 seconds...", response.status_code)
+                time.sleep(5)
+                continue
+            else:
+                model_data = response.json()
+                if "data" in model_data and model_data["data"][0]["id"]:
+                    model_name = model_data["data"][0]["id"]
+                    engine_ready = True
 
     return model_name
 
@@ -284,6 +292,8 @@ def main():
                 "model": "completion"
             }
         }
+
+        pprint(new_model_data)
 
         response = create_model(new_model_data)
         if response is None:
