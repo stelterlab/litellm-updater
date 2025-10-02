@@ -1,6 +1,6 @@
 # litellm-updater
 
-a little helper to update the served model for an endpoint within LiteLLM proxy
+a little helper to update the served model for an endpoint within [LiteLLM proxy](https://github.com/BerriAI/litellm) made by Berri AI
 
 It is intended to run after the shutdown of the endpoint and before the restart of the endpoint. The current version is designed to work with OpenAI compatible endpoints - inference servers like the llama.cpp server, Huggingface TGI or similar.
 

@@ -1,10 +1,10 @@
-""" 
+"""
 litellm updater
 
-    update model for an inference endpoint within LiteLLM 
+    update model for an inference endpoint within LiteLLM
     when the model has been changed on the engine side
 
-2024-10-24 v0.1 - initial version
+2025-10-02 v0.2 - version, fix path for api_base
 
 written by Christian Otto Stelter
 """
@@ -18,7 +18,7 @@ import time
 from pprint import pprint
 
 
-engine_api_base = os.environ.get("ENGINE_API_BASE", "http://127.0.0.1:8080/v1")
+engine_api_base = os.environ.get("ENGINE_API_BASE", "http://127.0.0.1:8080")
 engine_api_key = os.environ.get("ENGINE_API_KEY", "")
 
 litellm_base_url = os.environ.get("LITELLM_BASE_URL", "http://127.0.0.1:4000")
@@ -99,7 +99,7 @@ def get_model_info():
         "Content-Type": "application/json"
     }
     url = f"{litellm_base_url}/v1/model/info"
-    
+
     response = do_api_request(url, action="GET", headers=headers)
     if response is not None:
         return response.json()
@@ -213,8 +213,8 @@ def wait_for_engine_ready():
         }
 
         url = f"{engine_api_base}/v1/models"
-        response = do_api_request(url, action="GET", 
-                                  headers=headers, 
+        response = do_api_request(url, action="GET",
+                                  headers=headers,
                                   silent=True)
         if response is None:
             logging.info("Engine not ready, waiting for 5 seconds...")
@@ -283,7 +283,7 @@ def main():
         new_model_data = {
             "model_name": model_name,
             "litellm_params": {
-                "api_base": engine_api_base,
+                "api_base": f"{engine_api_base}/v1",
                 "api_key": engine_api_key,
                 "model": f"openai/{model_name}"
             },
