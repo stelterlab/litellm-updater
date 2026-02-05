@@ -72,7 +72,7 @@ LITELLM_API_KEY=sk-1234
 
 ## Dependencies
 
-For testing LiteLLM v1.76.1-stable was used as last version. As long as the LiteLLM API remains stable, the script should work with any (newer) versions of LiteLLM. ;-)
+For testing LiteLLM v1.80.8-stable was used as last version. As long as the LiteLLM API remains stable, the script should work with any (newer) versions of LiteLLM. ;-)
 
 Needs requests library for Python. Install it with pip:
 
