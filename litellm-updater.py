@@ -4,7 +4,7 @@ litellm updater
     update model for an inference endpoint within LiteLLM
     when the model has been changed on the engine side
 
-2025-10-02 v0.2 - version, fix path for api_base
+2026-02-05 v0.3
 
 written by Christian Otto Stelter
 """
@@ -18,7 +18,7 @@ import time
 from pprint import pprint
 
 
-engine_api_base = os.environ.get("ENGINE_API_BASE", "http://127.0.0.1:8080")
+engine_api_base = os.environ.get("ENGINE_API_BASE", "http://127.0.0.1:8080/v1")
 engine_api_key = os.environ.get("ENGINE_API_KEY", "")
 
 litellm_base_url = os.environ.get("LITELLM_BASE_URL", "http://127.0.0.1:4000")
@@ -128,7 +128,7 @@ def get_active_model_on_endpoint(endpoint):
         "Authorization": f"Bearer {engine_api_key}",
         "Content-Type": "application/json"
     }
-    url = f"{engine_api_base}/v1/models"
+    url = f"{engine_api_base}/models"
 
     response = do_api_request(url, action="GET", headers=headers)
     # if response is not None and response.status_code == 200:
@@ -212,7 +212,7 @@ def wait_for_engine_ready():
             "Content-Type": "application/json"
         }
 
-        url = f"{engine_api_base}/v1/models"
+        url = f"{engine_api_base}/models"
         response = do_api_request(url, action="GET",
                                   headers=headers,
                                   silent=True)
@@ -243,7 +243,7 @@ def check_litellm():
 
 
 def main():
-    logging.info("litellm updater v0.1")
+    logging.info("litellm updater v0.3")
 
     models = check_litellm()
     if models is None:
@@ -283,7 +283,7 @@ def main():
         new_model_data = {
             "model_name": model_name,
             "litellm_params": {
-                "api_base": f"{engine_api_base}/v1",
+                "api_base": f"{engine_api_base}",
                 "api_key": engine_api_key,
                 "model": f"openai/{model_name}"
             },
