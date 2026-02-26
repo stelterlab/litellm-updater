@@ -1,2 +1,4 @@
 .venv
 env.sh
+.vscode
+setenv.sh

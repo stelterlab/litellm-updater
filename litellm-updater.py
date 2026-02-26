@@ -4,7 +4,7 @@ litellm updater
     update model for an inference endpoint within LiteLLM
     when the model has been changed on the engine side
 
-2026-02-05 v0.3
+2025-10-02 v0.3
 
 written by Christian Otto Stelter
 """
